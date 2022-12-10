@@ -6,18 +6,18 @@ using System.Text;
 
 namespace IdentificationNumber.Models
 {
-    public class OrganizationIdentificationNumber : IdentificationNumber
+    public class BusinessRegistrationNumber : IdentificationNumber
     {
-        public CorporateForm Form
+        public BusinessForm Form
         {
             get
             {
                 switch (base._value)
                 {
                     case string x when x.StartsWith("2") && !x.StartsWith("20"):
-                        return CorporateForm.ReligiousCommunity;
+                        return BusinessForm.ReligiousCommunity;
                     default:
-                        return CorporateForm.Unknown;
+                        return BusinessForm.Unknown;
 
                 }
             }
