@@ -1,6 +1,6 @@
 ﻿namespace IdentificationNumber.Models
 {
-    public enum IdentityType
+    public enum NumberType
     {
         Unknown = 0,
         Person = 1,
