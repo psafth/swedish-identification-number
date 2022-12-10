@@ -3,6 +3,28 @@ using IdentityNumber.Helpers;
 namespace IdentityNumber.Tests
 {
     [TestClass]
+    public class Luhn_Validate
+    {
+        [TestMethod]
+        [DataRow("1808019168", true)]
+        [DataRow("1808019169", false)]
+        public void Input_SingleString_ReturnValid(string input, bool expected)
+        {
+            var result = Luhn.Validate(input);
+            Assert.AreEqual(expected, result);
+        }
+
+        [TestMethod]
+        [DataRow("180801916", 8, true)]
+        [DataRow("180801916", 9, false)]
+        public void Input_StringAndControl_ReturnValid(string input, int control, bool expected)
+        {
+            var result = Luhn.Validate(input, control);
+            Assert.AreEqual(expected, result);
+        }
+    }
+
+    [TestClass]
     public class Luhn_GetControlNumber
     {
         [TestMethod]
@@ -11,6 +33,7 @@ namespace IdentityNumber.Tests
         [DataRow("840306239", 4)]
         [DataRow("060913239", 4)]
         [DataRow("121212121", 2)]
+        [DataRow("4992739871", 6)]
         public void Input_Is_String_ReturnValid(string input, int expected)
         {
             var result = Luhn.GetControlNumber(input);

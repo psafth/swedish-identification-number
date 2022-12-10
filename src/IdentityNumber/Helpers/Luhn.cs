@@ -10,6 +10,39 @@ namespace IdentityNumber.Helpers
     public static class Luhn
     {
         /// <summary>
+        /// Validates an given string (of integers) with the Luhn algorithm. The last character is used a the control number.
+        /// </summary>
+        /// <param name="input">String of integers ending with a control number</param>
+        /// <returns>True if valid. False if not.</returns>
+        public static bool Validate(string input)
+        {
+            if (string.IsNullOrEmpty(input)) return false;
+
+            if (input.Length < 2)
+                throw new ArgumentOutOfRangeException(nameof(input));
+
+            var charLastDigit = input.Last();
+
+            var controlDigit = int.Parse(charLastDigit.ToString());
+
+            return Luhn.Validate(input.Remove(input.Length - 1, 1), controlDigit);
+        }
+
+        /// <summary>
+        /// Validates an given string (of integers) by comparing it to the given expected control number.
+        /// </summary>
+        /// <param name="input">String of integers without control number</param>
+        /// <param name="expectedControlNumber">The expected control number</param>
+        /// <returns>True if valid. False if not.</returns>
+        public static bool Validate(string input, int expectedControlNumber)
+        {
+            var calculatedControlNumber = Luhn.GetControlNumber(input);
+
+            return expectedControlNumber == calculatedControlNumber;
+        }
+
+
+        /// <summary>
         /// Calculates the control number of a given string with the Luhn algorithm
         /// </summary>
         /// <param name="input"></param>
@@ -22,7 +55,7 @@ namespace IdentityNumber.Helpers
 
             var digits = input.Select(c => c);
 
-            return GetControlNumber(digits);
+            return Luhn.GetControlNumber(digits);
         }
 
         /// <summary>
@@ -33,7 +66,7 @@ namespace IdentityNumber.Helpers
         public static int GetControlNumber(IEnumerable<char> input)
         {
             var numbers = input.Select(x => int.Parse(x.ToString()));
-            return GetControlNumber(numbers);
+            return Luhn.GetControlNumber(numbers);
         }
 
         /// <summary>
@@ -52,7 +85,7 @@ namespace IdentityNumber.Helpers
         }
 
         /// <summary>
-        /// Calculates the control number of a given list of characters with the Luhn algoritm implementation gathered by the Rosetta project.
+        /// Calculates the control number of a given list of characters with the Luhn algoritm implementation gathered by the Rosetta Code project.
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>
