@@ -34,7 +34,7 @@ TBD
 TBD
 
 ### Ready for entity framework
-E.g. An simple customer entity where a customer can be both an private customer or an business.
+E.g. An simple customer entity where a customer can be either an private customer or an business customer.
 
 The property IdentificationNumber can hold any type of identification number implementing the IIdentificationNumber interface. There is no need for any backing field or multiple properties.
 
