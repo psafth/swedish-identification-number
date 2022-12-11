@@ -1,0 +1,39 @@
+﻿using IdentificationNumber.Helpers;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace IdentificationNumber.Tests
+{
+    [TestClass]
+    public class Regex_MatchPerson
+    {
+        [TestMethod]
+        [DataRow("9804302389")]             // Person born 1998-04-30
+        [DataRow("980430-2389")]            // Person born 1998-04-30
+        [DataRow("980430+2389")]            // Person born 1898-04-30
+        [DataRow("200605162395")]           // Person born 2006-05-16
+        [DataRow("20170202-2383")]          // Person born 2017-02-02
+        [DataRow("195401762397")]           // Coordination born 1954-01-16
+        public void String_MatchPerson_Successful(string input)
+        {
+            var result = CommonRegex.MatchPerson(input);
+            Assert.IsTrue(result.Success);
+        }
+
+        [TestMethod]
+        [DataRow("test")]
+        [DataRow("2201702022383")]
+        [DataRow("2201702022383\r\n")]
+        [DataRow("220170\r\n2022383")]
+        [DataRow("195401922397")]           // Coordination born 1954-01-32
+        [DataRow("19540122397")]            // Invalid month
+        public void String_MatchPerson_NotSuccessful(string input)
+        {
+            var result = CommonRegex.MatchPerson(input);
+            Assert.IsFalse(result.Success);
+        }
+    }
+}
