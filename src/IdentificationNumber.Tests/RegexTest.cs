@@ -18,6 +18,8 @@ namespace IdentificationNumber.Tests
         [DataRow("20170202-2383")]          // Person born 2017-02-02
         [DataRow("5401762397")]             // Coordination born 1954-01-16
         [DataRow("195401762397")]           // Coordination born 1954-01-16
+        [DataRow("200001632389")]           // Coordination born 2000-01-02
+        [DataRow("000163+2389")]            // Coordination born 1900-01-02
         public void String_MatchPerson_Successful(string input)
         {
             var result = CommonRegex.MatchPerson(input);
