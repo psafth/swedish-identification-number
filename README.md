@@ -1,4 +1,4 @@
-# swedish-identity-number
+# swedish-identification-number
 
 The all in one library for swedish identification numbers such as personal (personnummer), coordination (samordningsnummer) and business registration number (organisationsnummer).
 
@@ -15,7 +15,7 @@ PersonalIdentificationNumber identificationNumber = strVal.ToIdentificationNumbe
 ### Coordination number (samordningsnummer)
 
 ```
-string strVal = "19651213";
+string strVal = "6512623306";
 
 PersonalIdentificationNumber identificationNumber = strVal.ToIdentificationNumber();
 ```
