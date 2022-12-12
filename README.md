@@ -32,11 +32,7 @@ Console.WriteLine(identificationNumber.ToFormalString());                       
 Console.WriteLine(identificationNumber.DateOfBirth.ToString("yyyy-MM-dd"));     // Output: 1954-01-04
 ```
 
-### Business registration number (org
-
-
-
-isationsnummer)
+### Business registration number (orgisationsnummer)
 ```
 string strVal = "2120000142";             // or 212000-0142
 
