@@ -45,7 +45,7 @@ TBD
 ### Fluid validation
 TBD
 
-### Ready for entity framework
+### Ready for Entity Framework
 E.g. A simple customer entity where a customer can be either a private customer or a business customer.
 
 The property IdentificationNumber can hold any type of identification number implementing the IIdentificationNumber interface. There is no need for any backing field or multiple properties.
