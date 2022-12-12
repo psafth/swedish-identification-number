@@ -21,9 +21,15 @@ Console.WriteLine(identificationNumber.ToFormalString());   // Output: 760701-23
 ### Coordination number (samordningsnummer)
 
 ```
-string strVal = "6512623306";
+string strVal = "5401642383";
 
 PersonalIdentificationNumber identificationNumber = strVal.ToIdentificationNumber();
+
+bool isValid = identificationNumber.IsValid;
+
+Console.WriteLine(identificationNumber);                                        // Output: 195401642383
+Console.WriteLine(identificationNumber.ToFormalString());                       // Output: 540164-2383
+Console.WriteLine(identificationNumber.DateOfBirth.ToString("yyyy-MM-dd"));     // Output: 1954-01-04
 ```
 
 ### Business registration number (organisationsnummer)
