@@ -9,7 +9,7 @@ The all in one library for swedish identification numbers such as personal (pers
 ```
 string strVal = "197607012395";                             // Or 7607012395, or 760701-2395 or 19760701-2395
 
-PersonalIdentificationNumber identificationNumber = strVal.ToIdentificationNumber();
+PersonIdentificationNumber identificationNumber = strVal.ToIdentificationNumber();
 
 bool isValid = identificationNumber.IsValid;
 
@@ -23,7 +23,7 @@ Console.WriteLine(identificationNumber.ToFormalString());   // Output: 760701-23
 ```
 string strVal = "5401642383";
 
-PersonalIdentificationNumber identificationNumber = strVal.ToIdentificationNumber();
+PersonIdentificationNumber identificationNumber = strVal.ToIdentificationNumber();
 
 bool isValid = identificationNumber.IsValid;
 
