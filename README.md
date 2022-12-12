@@ -32,7 +32,11 @@ Console.WriteLine(identificationNumber.ToFormalString());                       
 Console.WriteLine(identificationNumber.DateOfBirth.ToString("yyyy-MM-dd"));     // Output: 1954-01-04
 ```
 
-### Business registration number (organisationsnummer)
+### Business registration number (org
+
+
+
+isationsnummer)
 ```
 string strVal = "2120000142";             // or 212000-0142
 
@@ -46,7 +50,7 @@ TBD
 TBD
 
 ### Ready for entity framework
-E.g. An simple customer entity where a customer can be either an private customer or an business customer.
+E.g. A simple customer entity where a customer can be either a private customer or a business customer.
 
 The property IdentificationNumber can hold any type of identification number implementing the IIdentificationNumber interface. There is no need for any backing field or multiple properties.
 
