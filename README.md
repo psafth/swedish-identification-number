@@ -5,6 +5,7 @@ The all in one library for swedish identification numbers such as personal (pers
 ## Features
 
 ### Personal identification number (personnummer)
+[![feature-status-pid](https://img.shields.io/badge/Status-In%20progress-yellow.svg)](https://github.com/psafth/swedish-identification-number/issues/4)
 
 ```
 string strVal = "197607012395";                             // Or 7607012395, or 760701-2395 or 19760701-2395
@@ -19,6 +20,7 @@ Console.WriteLine(identificationNumber.ToFormalString());   // Output: 760701-23
 ```
 
 ### Coordination number (samordningsnummer)
+[![feature-status-pid](https://img.shields.io/badge/Status-In%20progress-yellow.svg)](https://github.com/psafth/swedish-identification-number/issues/4)
 
 ```
 string strVal = "5401642383";
@@ -33,6 +35,7 @@ Console.WriteLine(identificationNumber.DateOfBirth.ToString("yyyy-MM-dd"));     
 ```
 
 ### Business registration number (orgisationsnummer)
+[![feature-status-pid](https://img.shields.io/badge/Status-In%20progress-yellow.svg)](https://github.com/psafth/swedish-identification-number/issues/5)
 ```
 string strVal = "2120000142";             // or 212000-0142
 
