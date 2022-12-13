@@ -7,6 +7,8 @@ namespace IdentificationNumber.Tests
     public class PersonIdentificationNumber_Constructor
     {
         [TestMethod]
+        [DataRow("2212123572", true)]
+        [DataRow("2212133572", true)]
         [DataRow("8907173572", true)]
         [DataRow("890717+3572", true)]
         public void Input_Valid_String(string input, bool expected)

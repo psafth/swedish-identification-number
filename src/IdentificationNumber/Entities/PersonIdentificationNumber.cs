@@ -60,7 +60,7 @@ namespace IdentificationNumber.Models
 
                 // Assume two digits
                 var assumedDateOfBirth = new DateTime(GetDecade(DateTime.Today.Year) + year, month, day > 31 ? day - 60 : day);
-                var dateOfBirth = assumedDateOfBirth < DateTime.Today ? assumedDateOfBirth : new DateTime(GetDecade(DateTime.Today.Year) + year - 100 + prevDecade, month, day > 31 ? day - 60 : day);
+                var dateOfBirth = assumedDateOfBirth <= DateTime.Today ? assumedDateOfBirth : new DateTime(GetDecade(DateTime.Today.Year) + year - 100 + prevDecade, month, day > 31 ? day - 60 : day);
             }
             else
             {
