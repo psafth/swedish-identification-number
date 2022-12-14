@@ -5,6 +5,20 @@ using IdentificationNumber.Tests.Extensions;
 namespace IdentificationNumber.Tests
 {
     [TestClass]
+    public class PersonIdentificationNumber_ToFormalString
+    {
+        [TestMethod]
+        [DataRow("191808019168", "180801+9168")]
+        [DataRow("1702022383", "170202-2383")]
+        public void FullYear_ToFormalString(string input, string expected)
+        {
+            var result = new PersonIdentificationNumber(input).ToFriendlyName();
+
+            Assert.AreEqual(expected, result);
+        }
+    }
+
+    [TestClass]
     public class PersonIdentificationNumber_IsValid
     {
         [TestMethod]

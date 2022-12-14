@@ -2,6 +2,7 @@
 using IdentificationNumber.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text.RegularExpressions;
 
 namespace IdentificationNumber.Models
@@ -27,7 +28,7 @@ namespace IdentificationNumber.Models
 
         public override bool Equals(IIdentificationNumber other)
         {
-            throw new NotImplementedException();
+            return _value == other.ToString();
         }
 
         public override bool IsValid
@@ -40,7 +41,12 @@ namespace IdentificationNumber.Models
 
         public override string ToFriendlyName()
         {
-            throw new NotImplementedException();
+            var birth = _value.Substring(2, 6);
+            var lastFour = _value.Substring(8, 4);
+
+            var separator = (DateTime.Today.AddYears(-100) <= DateOfBirth) ? "-" : "+";
+
+            return $"{birth}{separator}{lastFour}";
         }
 
         public override string ToString()
@@ -49,11 +55,19 @@ namespace IdentificationNumber.Models
         }
 
         /// <summary>
+        /// Parses a string to a full valid person identification number and passes the date of birth as an out parameter.
+        /// Valid inputs are:
+        /// YYMMDD-XXXX
+        /// YYMMDD+XXXX
+        /// YYYYMMDDXXXX
+        /// YYYYMMDD-XXXX
         /// 
+        /// Coordination numbers are also valid.
         /// </summary>
-        /// <param name="match"></param>
-        /// <returns></returns>
-        /// <exception cref="NotImplementedException"></exception>
+        /// <param name="value">String input to be parsed</param>
+        /// <param name="dateOfBirth">DateTime </param>
+        /// <returns>String in the format of YYYYMMDDXXXX</returns>
+        /// <exception cref="FormatException"></exception>
         private string Parse(string value, out DateTime dateOfBirth)
         {
             var match = CommonRegex.MatchPerson(value);
@@ -67,7 +81,6 @@ namespace IdentificationNumber.Models
             var separator = match.Groups["separator"]?.Value;
             var individual = match.Groups["individual"]?.Value;
             var control = int.Parse(match.Groups["control"]?.Value);
-
 
             if (year < 1000)
             {
