@@ -5,7 +5,7 @@ The all in one library for swedish identification numbers such as personal (pers
 ## Features
 
 ### Personal identification number (personnummer)
-[![feature-status-pid](https://img.shields.io/badge/Status-In%20progress-yellow.svg)](https://github.com/psafth/swedish-identification-number/issues/4)
+[![feature-status-pid](https://img.shields.io/badge/Status-Done-sucess.svg)](https://github.com/psafth/swedish-identification-number/issues/4)
 
 ```C#
 string strVal = "197607012395";                             // Or 7607012395, or 760701-2395 or 19760701-2395
