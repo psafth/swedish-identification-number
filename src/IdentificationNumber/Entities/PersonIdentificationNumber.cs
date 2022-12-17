@@ -1,4 +1,5 @@
-﻿using IdentificationNumber.Helpers;
+﻿using IdentificationNumber.Extensions;
+using IdentificationNumber.Helpers;
 using IdentificationNumber.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -9,28 +10,68 @@ namespace IdentificationNumber.Models
 {
     public class PersonIdentificationNumber : IdentificationNumber, IEquatable<string>
     {
+        /// <summary>
+        /// The persons date of birth
+        /// </summary>
         public DateTime DateOfBirth { get; private set; }
 
-        public PersonIdentificationNumber(string value)
+        /// <summary>
+        /// Creates a person identification number from a valid string.
+        /// Valid inputs are:
+        /// YYMMDD-XXXX
+        /// YYMMDD+XXXX
+        /// YYYYMMDDXXXX
+        /// YYYYMMDD-XXXX
+        /// 
+        /// Coordination numbers are also valid.
+        /// DD must be 1-31 or 61-91.
+        /// </summary>
+        /// <param name="value">String to be parsed as an personal identification number.</param>
+        /// <exception cref="ArgumentNullException"></exception>
+        public PersonIdentificationNumber(string value) : base(value)
         {
+            // Check that we have anything.
             if (string.IsNullOrWhiteSpace(value))
                 throw new ArgumentNullException(nameof(value));
 
-            _value = Parse(value, out DateTime dateOfBirth);
+            // Parse the value and get the date of birth.
+            var parsedValue = Parse(value, out DateTime dateOfBirth);
 
+            // Set the date of birth.
             DateOfBirth = dateOfBirth;
+
+            // Store the value to the backing field.
+            _value = parsedValue;
         }
 
+        /// <summary>
+        /// Compares two person identification numbers by matching their backing field value.
+        /// </summary>
+        /// <param name="other"></param>
+        /// <returns></returns>
         public bool Equals(string other)
         {
-            return _value == other;
+            try
+            {
+                var otherPersonIdentificationNumber = other.ToIdentificationNumber();
+                return _value == otherPersonIdentificationNumber.ToString();
+            }
+            catch { return false; }
         }
 
+        /// <summary>
+        /// Compares two person identification numbers by matching their backing field value.
+        /// </summary>
+        /// <param name="other"></param>
+        /// <returns></returns>
         public override bool Equals(IIdentificationNumber other)
         {
             return _value == other.ToString();
         }
 
+        /// <summary>
+        /// Validates a person identification number. True if valid. False if not.
+        /// </summary>
         public override bool IsValid
         {
             get
@@ -39,6 +80,10 @@ namespace IdentificationNumber.Models
             }
         }
 
+        /// <summary>
+        /// Outputs the formal string of a person identificatio number
+        /// </summary>
+        /// <returns>Younger than 100 years: YYMMDD-XXXX. Older than 100 years: YYMMDD+XXXX</returns>
         public override string ToFriendlyName()
         {
             var birth = _value.Substring(2, 6);
@@ -73,7 +118,7 @@ namespace IdentificationNumber.Models
             var match = CommonRegex.MatchPerson(value);
 
             if (!match.Success)
-                throw new FormatException("The input does not match an valid person identification format.");
+                throw new FormatException("The input does not match a valid person identification number.");
 
             var year = int.Parse(match.Groups["year"]?.Value);
             var month = int.Parse(match.Groups["month"]?.Value);
@@ -102,6 +147,11 @@ namespace IdentificationNumber.Models
         private int GetDecade(int year)
         {
             return Math.DivRem(year, 100, out int rem) * 100;
+        }
+
+        public static bool IsMatching(string value)
+        {
+            return CommonRegex.MatchPerson(value).Success;
         }
     }
 }
