@@ -7,6 +7,11 @@ namespace IdentificationNumber
 {
     public abstract class IdentificationNumber : IIdentificationNumber
     {
+        public IdentificationNumber(string value)
+        {
+            _value = value;
+        }
+
         protected string _value;
 
         public abstract bool IsValid { get; }
