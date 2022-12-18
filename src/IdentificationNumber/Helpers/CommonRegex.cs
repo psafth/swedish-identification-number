@@ -13,5 +13,12 @@ namespace IdentificationNumber.Helpers
             var regex = new Regex(pattern, RegexOptions.Compiled | RegexOptions.Singleline, TimeSpan.FromMilliseconds(20));
             return regex.Match(input);
         }
+
+        public static Match MatchBusiness(string input)
+        {
+            string pattern = @"^(?<group>[1-9-[4]]{1})(?<number>[\d]{1}[2-9]{1}[\d]{1}[\d]{2})(?<separator>[\-]{0,1})(?<serial>[\d]{3})(?<control>[\d]{1})$";
+            var regex = new Regex(pattern, RegexOptions.Compiled | RegexOptions.Singleline, TimeSpan.FromMilliseconds(20));
+            return regex.Match(input);
+        }
     }
 }
