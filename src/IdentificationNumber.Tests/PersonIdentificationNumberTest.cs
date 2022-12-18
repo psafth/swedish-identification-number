@@ -5,6 +5,47 @@ using IdentificationNumber.Tests.Extensions;
 namespace IdentificationNumber.Tests
 {
     [TestClass]
+    public class PersonIdentificationNumber_Gender
+    {
+        [TestMethod]
+        [DataRow("194106279161")]
+        [DataRow("195003072260")]
+        public void Input_Female_IsTrue(string input)
+        {
+            var result = new PersonIdentificationNumber(input).Gender;
+            Assert.AreEqual(Enums.Gender.Female, result);
+        }
+
+        [TestMethod]
+        [DataRow("195809092652")]
+        [DataRow("195811112217")]
+        public void Input_Male_IsTrue(string input)
+        {
+            var result = new PersonIdentificationNumber(input).Gender;
+            Assert.AreEqual(Enums.Gender.Male, result);
+        }
+
+        [TestMethod]
+        [DataRow("195809092652")]
+        [DataRow("195811112217")]
+        public void Input_Female_IsFalse(string input)
+        {
+            var result = new PersonIdentificationNumber(input).Gender;
+            Assert.AreNotEqual(Enums.Gender.Female, result);
+        }
+
+        [TestMethod]
+        [DataRow("194106279161")]
+        [DataRow("195003072260")]
+
+        public void Input_Male_IsFalse(string input)
+        {
+            var result = new PersonIdentificationNumber(input).Gender;
+            Assert.AreNotEqual(Enums.Gender.Male, result);
+        }
+    }
+
+    [TestClass]
     public class PersonIdentificationNumber_ToFormalString
     {
         [TestMethod]

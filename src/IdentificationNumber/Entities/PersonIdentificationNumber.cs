@@ -1,15 +1,30 @@
-﻿using IdentificationNumber.Extensions;
+﻿using IdentificationNumber.Enums;
+using IdentificationNumber.Extensions;
 using IdentificationNumber.Helpers;
 using IdentificationNumber.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Text.RegularExpressions;
 
 namespace IdentificationNumber.Models
 {
     public class PersonIdentificationNumber : IdentificationNumber, IEquatable<string>
     {
+        /// <summary>
+        /// The persons gender based on the 10th digit in the identification number
+        /// </summary>
+        public Gender Gender
+        {
+            get
+            {
+                var genderDigit = int.Parse(_value.ElementAt(10).ToString());
+
+                return genderDigit % 2 == 0 ? Gender.Female : Gender.Male;
+            }
+        }
+
         /// <summary>
         /// The persons date of birth
         /// </summary>
