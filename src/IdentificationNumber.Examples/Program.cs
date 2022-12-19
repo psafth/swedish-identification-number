@@ -33,13 +33,13 @@ Console.WriteLine("\nUnknown but type checked and casted");
 if (unknownNumberType1 is PersonIdentificationNumber)
 {
     var knownType = unknownNumberType1 as PersonIdentificationNumber;
-    Console.WriteLine($"{knownType.ToFriendlyName()} | Valid: {knownType.IsValid} | Gender: {knownType.Gender} | Birth: {knownType.DateOfBirth}");
+    Console.WriteLine($"{knownType?.ToFriendlyName()} | Valid: {knownType?.IsValid} | Gender: {knownType?.Gender} | Birth: {knownType?.DateOfBirth}");
 }
 
 if (unknownNumberType1 is BusinessRegistrationNumber)
 {
     var knownType = unknownNumberType1 as BusinessRegistrationNumber;
-    Console.WriteLine($"{knownType.ToFriendlyName()} | Valid: {knownType.IsValid} | Form: {knownType.BusinessForm}");
+    Console.WriteLine($"{knownType?.ToFriendlyName()} | Valid: {knownType?.IsValid} | Form: {knownType?.BusinessForm}");
 }
 
 
