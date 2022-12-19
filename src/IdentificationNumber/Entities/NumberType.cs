@@ -4,7 +4,6 @@
     {
         Unknown = 0,
         Person = 1,
-        Coordination = 2,
-        Business = 3
+        Coordination = 2
     }
 }

@@ -2,11 +2,13 @@
 {
     public enum BusinessForm
     {
-        Unknown,
-        Limited,
-        Trading,
-        EconomicAssociation,
-        ReligiousCommunity,
-        GovernmentAgency
+        Unknown = 0,
+        DeceasedsEstate = 1,
+        GovernmentAgency = 2,
+        Foreign = 3,
+        Limited = 5,
+        EconomicAssociation = 7,
+        NonProfit = 8,
+        Trading = 9,
     }
 }

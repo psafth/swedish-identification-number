@@ -34,14 +34,20 @@ namespace IdentificationNumber.Models
 
         public override bool Equals(IIdentificationNumber other)
         {
-            throw new NotImplementedException();
+            return _value == other.ToString();
         }
 
-        public override bool IsValid { get; }
+        public override bool IsValid
+        {
+            get
+            {
+                return Luhn.Validate(_value.Remove(6, 1));
+            }
+        }
 
         public override string ToFriendlyName()
         {
-            throw new NotImplementedException();
+            return _value;
         }
 
         public bool Equals(string other)
