@@ -18,7 +18,7 @@ namespace IdentificationNumber
 
         public abstract bool Equals(IIdentificationNumber other);
 
-        public abstract string ToFriendlyName();
+        public abstract string ToFormalString();
 
         public abstract override string ToString();
     }

@@ -45,7 +45,7 @@ namespace IdentificationNumber.Models
             }
         }
 
-        public override string ToFriendlyName()
+        public override string ToFormalString()
         {
             return _value;
         }

@@ -53,7 +53,7 @@ namespace IdentificationNumber.Tests
         [DataRow("1702022383", "170202-2383")]
         public void FullYear_ToFormalString(string input, string expected)
         {
-            var result = new PersonIdentificationNumber(input).ToFriendlyName();
+            var result = new PersonIdentificationNumber(input).ToFormalString();
 
             Assert.AreEqual(expected, result);
         }

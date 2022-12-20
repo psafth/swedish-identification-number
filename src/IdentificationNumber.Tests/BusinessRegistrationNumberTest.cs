@@ -62,7 +62,7 @@ namespace IdentificationNumber.Tests
         [DataRow("2120000142", "212000-0142")]
         public void Input_WithoutSeparator_ToFormalString(string input, string expected)
         {
-            var result = new BusinessRegistrationNumber(input).ToFriendlyName();
+            var result = new BusinessRegistrationNumber(input).ToFormalString();
 
             Assert.AreEqual(expected, result);
         }

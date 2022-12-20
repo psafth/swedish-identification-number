@@ -99,7 +99,7 @@ namespace IdentificationNumber.Models
         /// Outputs the formal string of a person identificatio number
         /// </summary>
         /// <returns>Younger than 100 years: YYMMDD-XXXX. Older than 100 years: YYMMDD+XXXX</returns>
-        public override string ToFriendlyName()
+        public override string ToFormalString()
         {
             var birth = _value.Substring(2, 6);
             var lastFour = _value.Substring(8, 4);
