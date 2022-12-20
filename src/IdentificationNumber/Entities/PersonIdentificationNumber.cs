@@ -12,6 +12,11 @@ namespace IdentificationNumber.Models
 {
     public class PersonIdentificationNumber : IdentificationNumber, IEquatable<string>
     {
+        public NumberType Type
+        {
+            get; private set;
+        }
+
         /// <summary>
         /// The persons gender based on the 10th digit in the identification number
         /// </summary>
@@ -50,10 +55,13 @@ namespace IdentificationNumber.Models
                 throw new ArgumentNullException(nameof(value));
 
             // Parse the value and get the date of birth.
-            var parsedValue = Parse(value, out DateTime dateOfBirth);
+            var parsedValue = Parse(value, out DateTime dateOfBirth, out NumberType type);
 
             // Set the date of birth.
             DateOfBirth = dateOfBirth;
+
+            // Set the number type
+            Type = type;
 
             // Store the value to the backing field.
             _value = parsedValue;
@@ -128,7 +136,7 @@ namespace IdentificationNumber.Models
         /// <param name="dateOfBirth">DateTime </param>
         /// <returns>String in the format of YYYYMMDDXXXX</returns>
         /// <exception cref="FormatException"></exception>
-        private string Parse(string value, out DateTime dateOfBirth)
+        private string Parse(string value, out DateTime dateOfBirth, out NumberType type)
         {
             var match = CommonRegex.MatchPerson(value);
 
@@ -155,6 +163,12 @@ namespace IdentificationNumber.Models
                 // Assume four digits
                 dateOfBirth = new DateTime(year, month, day);
             }
+
+            // Set the type. Coordination or Person.
+            if (day > 0)
+                type = day > 31 && day < 92 ? NumberType.Coordination : NumberType.Person;
+            else
+                type = NumberType.Unknown;
 
             return $"{dateOfBirth.Year:0000}{dateOfBirth.Month:00}{day:00}{individual:000}{control:0}";
         }
