@@ -112,7 +112,8 @@ namespace IdentificationNumber.Helpers
             if (input < 10)
                 return new int[] { input };
 
-            return new int[] { input / 10, input % 10 };
+            var q = Math.DivRem(input, 10, out int rem);
+            return new int[] { q, rem };
         }
 
         /// <summary>
