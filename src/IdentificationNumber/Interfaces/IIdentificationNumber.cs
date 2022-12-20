@@ -6,7 +6,7 @@ namespace IdentificationNumber.Interfaces
 {
     public interface IIdentificationNumber
     {
-        string ToFriendlyName();
+        string ToFormalString();
         bool Equals(IIdentificationNumber other);
         bool IsValid { get; }
     }
