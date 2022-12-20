@@ -16,7 +16,7 @@ namespace IdentificationNumber.Models
             if (string.IsNullOrWhiteSpace(value))
                 throw new ArgumentNullException(nameof(value));
 
-            // Parse the value and get the date of birth.
+            // Parse the value and get the business form
             var parsedValue = Parse(value, out BusinessForm businessForm);
 
             // Set the business form
@@ -41,13 +41,13 @@ namespace IdentificationNumber.Models
         {
             get
             {
-                return Luhn.Validate(_value.Remove(6, 1));
+                return Luhn.Validate(_value);
             }
         }
 
         public override string ToFormalString()
         {
-            return _value;
+            return _value.Insert(6, "-");
         }
 
         public bool Equals(string other)
@@ -80,15 +80,12 @@ namespace IdentificationNumber.Models
 
             var group = int.Parse(match.Groups["group"]?.Value);        // Business form
             var number = match.Groups["number"]?.Value;
-            var separator = !string.IsNullOrWhiteSpace(match.Groups["separator"]?.Value) ? match.Groups["separator"]?.Value : "-";
             var serial = match.Groups["serial"]?.Value;
             var control = int.Parse(match.Groups["control"]?.Value);
 
             businessForm = (BusinessForm)group;
 
-            return $"{group}{number}{separator}{serial}{control}";
+            return $"{group}{number}{serial}{control}";
         }
-
-
     }
 }
