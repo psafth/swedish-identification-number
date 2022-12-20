@@ -8,7 +8,38 @@ namespace IdentificationNumber.Tests
     [TestClass]
     public class BusinessRegistrationNumber_IsValid
     {
-        // TODO: Add test cases for validation
+        [TestMethod]
+        [DataRow("2120000142")]
+        public void Input_WithoutSeparator_IsValid_ReturnsTrue(string input)
+        {
+            var result = new BusinessRegistrationNumber(input).IsValid;
+            Assert.IsTrue(result);
+        }
+
+        [TestMethod]
+        [DataRow("2120000143")]
+        public void Input_WithoutSeparator_IsValid_ReturnsFalse(string input)
+        {
+            var result = new BusinessRegistrationNumber(input).IsValid;
+            Assert.IsFalse(result);
+        }
+
+        [TestMethod]
+        [DataRow("212000-0142")]
+        public void Input_WithSeparator_IsValid_ReturnsTrue(string input)
+        {
+            var result = new BusinessRegistrationNumber(input).IsValid;
+            Assert.IsTrue(result);
+        }
+
+        [TestMethod]
+        [DataRow("212000-0143")]
+        public void Input_WithSeparator_IsValid_ReturnsFalse(string input)
+        {
+            var result = new BusinessRegistrationNumber(input).IsValid;
+            Assert.IsFalse(result);
+        }
+
     }
 
     [TestClass]
@@ -21,10 +52,10 @@ namespace IdentificationNumber.Tests
     public class BusinessRegistrationNumber_Constructor
     {
         [TestMethod]
-        [DataRow("2120000142", "212000-0142")]
-        [DataRow("212000-0142", "212000-0142")]
-        [DataRow("556703-7485", "556703-7485")]
-        [DataRow("802004-9642", "802004-9642")]
+        [DataRow("2120000142", "2120000142")]
+        [DataRow("212000-0142", "2120000142")]
+        [DataRow("556703-7485", "5567037485")]
+        [DataRow("802004-9642", "8020049642")]
         public void Parse_Valid_Input(string input, string expected)
         {
             var result = new BusinessRegistrationNumber(input);
@@ -67,5 +98,4 @@ namespace IdentificationNumber.Tests
             Assert.AreEqual(expected, result);
         }
     }
-
 }
