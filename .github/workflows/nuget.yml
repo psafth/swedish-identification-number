@@ -27,7 +27,7 @@ jobs:
       run: dotnet pack IdentificationNumber -c Release /p:Version=${VERSION} --no-build --output .
       working-directory: src
     - name: Push
-      run: dotnet nuget push **\*.nupkg --source 'https://api.nuget.org/v3/index.json' -ApiKey ${{secrets.NUGET_API_KEY}}
+      run: dotnet nuget push **\*.nupkg -s 'https://api.nuget.org/v3/index.json' -k ${{secrets.NUGET_API_KEY}}
       working-directory: src
         
         
