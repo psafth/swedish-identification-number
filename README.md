@@ -20,7 +20,7 @@ Console.WriteLine(identificationNumber.ToFormalString());   // Output: 760701-23
 ```
 
 ### Coordination number (samordningsnummer)
-[![feature-status-pid](https://img.shields.io/badge/Status-In%20progress-yellow.svg)](https://github.com/psafth/swedish-identification-number/issues/4)
+[![feature-status-pid](https://img.shields.io/badge/Status-Done-sucess.svg)](https://github.com/psafth/swedish-identification-number/issues/4)
 
 ```C#
 string strVal = "5401642383";
@@ -35,11 +35,16 @@ Console.WriteLine(identificationNumber.DateOfBirth.ToString("yyyy-MM-dd"));     
 ```
 
 ### Business registration number (orgisationsnummer)
-[![feature-status-pid](https://img.shields.io/badge/Status-In%20progress-yellow.svg)](https://github.com/psafth/swedish-identification-number/issues/5)
+[![feature-status-pid](https://img.shields.io/badge/Status-Done-sucess.svg)](https://github.com/psafth/swedish-identification-number/issues/5)
 ```C#
 string strVal = "2120000142";             // or 212000-0142
 
 BusinessRegistrationNumber identificationNumber = strVal.ToIdentificationNumber();
+
+Console.WriteLine(identificationNumber);                                        // Output: 2120000142
+Console.WriteLine(identificationNumber.ToFormalString());                       // Output: 212000-0142
+Console.WriteLine(identificationNumber.BusinessForm);                           // Output: GovernmentAgency
+
 ```
 
 ### Validation attributes
