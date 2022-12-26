@@ -1,9 +1,6 @@
-using IdentificationNumber.Helpers;
-using IdentificationNumber.Models;
-using IdentificationNumber.Tests.Extensions;
-using NuGet.Frameworks;
+using psafth.IdentificationNumber.Swedish.Entities;
 
-namespace IdentificationNumber.Tests
+namespace psafth.IdentificationNumber.Swedish.Tests
 {
     [TestClass]
     public class BusinessRegistrationNumber_IsValid

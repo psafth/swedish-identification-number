@@ -1,9 +1,6 @@
-﻿using IdentificationNumber.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using psafth.IdentificationNumber.Interfaces;
 
-namespace IdentificationNumber
+namespace psafth.IdentificationNumber
 {
     public abstract class IdentificationNumber : IIdentificationNumber
     {

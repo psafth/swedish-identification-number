@@ -1,11 +1,8 @@
-﻿using IdentificationNumber.Helpers;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
 
-namespace IdentificationNumber.Tests
+using psafth.IdentificationNumber.Swedish.Helpers;
+
+namespace psafth.IdentificationNumber.Swedish.Tests
 {
     [TestClass]
     public class Regex_MatchPerson

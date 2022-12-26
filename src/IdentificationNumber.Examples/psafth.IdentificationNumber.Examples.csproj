@@ -8,7 +8,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\IdentificationNumber\IdentificationNumber.csproj" />
+    <ProjectReference Include="..\IdentificationNumber\psafth.IdentificationNumber.csproj" />
+    <ProjectReference Include="..\psafth.IdentificationNumber.Swedish\psafth.IdentificationNumber.Swedish.csproj" />
   </ItemGroup>
 
 </Project>

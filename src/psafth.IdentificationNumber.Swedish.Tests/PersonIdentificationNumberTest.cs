@@ -1,8 +1,6 @@
-using IdentificationNumber.Helpers;
-using IdentificationNumber.Models;
-using IdentificationNumber.Tests.Extensions;
+using psafth.IdentificationNumber.Swedish.Entities;
 
-namespace IdentificationNumber.Tests
+namespace psafth.IdentificationNumber.Swedish.Tests
 {
     [TestClass]
     public class PersonIdentificationNumber_Gender
@@ -13,7 +11,7 @@ namespace IdentificationNumber.Tests
         public void Input_Female_IsTrue(string input)
         {
             var result = new PersonIdentificationNumber(input).Gender;
-            Assert.AreEqual(Enums.Gender.Female, result);
+            Assert.AreEqual(Gender.Female, result);
         }
 
         [TestMethod]
@@ -22,7 +20,7 @@ namespace IdentificationNumber.Tests
         public void Input_Male_IsTrue(string input)
         {
             var result = new PersonIdentificationNumber(input).Gender;
-            Assert.AreEqual(Enums.Gender.Male, result);
+            Assert.AreEqual(Gender.Male, result);
         }
 
         [TestMethod]
@@ -31,7 +29,7 @@ namespace IdentificationNumber.Tests
         public void Input_Female_IsFalse(string input)
         {
             var result = new PersonIdentificationNumber(input).Gender;
-            Assert.AreNotEqual(Enums.Gender.Female, result);
+            Assert.AreNotEqual(Gender.Female, result);
         }
 
         [TestMethod]
@@ -41,7 +39,7 @@ namespace IdentificationNumber.Tests
         public void Input_Male_IsFalse(string input)
         {
             var result = new PersonIdentificationNumber(input).Gender;
-            Assert.AreNotEqual(Enums.Gender.Male, result);
+            Assert.AreNotEqual(Gender.Male, result);
         }
     }
 

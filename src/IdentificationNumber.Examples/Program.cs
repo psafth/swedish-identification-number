@@ -1,5 +1,5 @@
-﻿using IdentificationNumber.Extensions;
-using IdentificationNumber.Models;
+﻿using psafth.IdentificationNumber.Swedish.Extensions;
+using psafth.IdentificationNumber.Swedish.Entities;
 
 Console.WriteLine("Known as person");
 var validPersonInput1 = "1212121212";
