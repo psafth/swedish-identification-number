@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\IdentificationNumber\psafth.IdentificationNumber.csproj" />
+    <ProjectReference Include="..\psafth.IdentificationNumber\psafth.IdentificationNumber.csproj" />
   </ItemGroup>
 
 </Project>

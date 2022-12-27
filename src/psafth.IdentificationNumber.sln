@@ -3,15 +3,19 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33103.184
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "psafth.IdentificationNumber", "IdentificationNumber\psafth.IdentificationNumber.csproj", "{46E35B14-2DBB-4603-885B-A84A9D71BFC9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "psafth.IdentificationNumber", "psafth.IdentificationNumber\psafth.IdentificationNumber.csproj", "{46E35B14-2DBB-4603-885B-A84A9D71BFC9}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "psafth.IdentificationNumber.Tests", "IdentificationNumber.Tests\psafth.IdentificationNumber.Tests.csproj", "{A06DF01A-8C46-410F-A10D-A97544E06FE5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "psafth.IdentificationNumber.Tests", "psafth.IdentificationNumber.Tests\psafth.IdentificationNumber.Tests.csproj", "{A06DF01A-8C46-410F-A10D-A97544E06FE5}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "psafth.IdentificationNumber.Examples", "IdentificationNumber.Examples\psafth.IdentificationNumber.Examples.csproj", "{CB3087F6-70E0-41D9-A87F-025382234A8C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "psafth.IdentificationNumber.Examples", "psafth.IdentificationNumber.Examples\psafth.IdentificationNumber.Examples.csproj", "{CB3087F6-70E0-41D9-A87F-025382234A8C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "psafth.IdentificationNumber.Swedish", "psafth.IdentificationNumber.Swedish\psafth.IdentificationNumber.Swedish.csproj", "{EA94EC6D-4F92-49C4-9C4E-A24200BF9DE6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "psafth.IdentificationNumber.Swedish", "psafth.IdentificationNumber.Swedish\psafth.IdentificationNumber.Swedish.csproj", "{EA94EC6D-4F92-49C4-9C4E-A24200BF9DE6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "psafth.IdentificationNumber.Swedish.Tests", "psafth.IdentificationNumber.Swedish.Tests\psafth.IdentificationNumber.Swedish.Tests.csproj", "{77F256F5-BB49-4D7C-8D6C-5976D162727A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "psafth.IdentificationNumber.Swedish.Tests", "psafth.IdentificationNumber.Swedish.Tests\psafth.IdentificationNumber.Swedish.Tests.csproj", "{77F256F5-BB49-4D7C-8D6C-5976D162727A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{5F623382-DBB8-4AF9-9391-6AEB66278409}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Examples", "Examples", "{EDB02DF0-0E36-48F4-B4B5-CC6403DF5A9B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -42,6 +46,11 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{A06DF01A-8C46-410F-A10D-A97544E06FE5} = {5F623382-DBB8-4AF9-9391-6AEB66278409}
+		{CB3087F6-70E0-41D9-A87F-025382234A8C} = {EDB02DF0-0E36-48F4-B4B5-CC6403DF5A9B}
+		{77F256F5-BB49-4D7C-8D6C-5976D162727A} = {5F623382-DBB8-4AF9-9391-6AEB66278409}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {D333E4E3-4070-4BC3-89C9-EA4423FDF8B9}
