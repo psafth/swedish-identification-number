@@ -1,4 +1,5 @@
-﻿using psafth.IdentificationNumber.Entities;
+﻿
+using psafth.IdentificationNumber.Entities;
 using psafth.IdentificationNumber.Helpers;
 using psafth.IdentificationNumber.Interfaces;
 using psafth.IdentificationNumber.Swedish.Extensions;
@@ -10,6 +11,7 @@ namespace psafth.IdentificationNumber.Swedish.Entities
 {
     public class PersonIdentificationNumber : IdentificationNumber, IEquatable<string>
     {
+
         public PersonNumberType Type
         {
             get; private set;
@@ -47,11 +49,13 @@ namespace psafth.IdentificationNumber.Swedish.Entities
         /// </para>
         /// </summary>
         /// <param name="value">String to be parsed as an personal identification number.</param>
-        /// <exception cref="ArgumentNullException"></exception>
+        /// <exception cref="ArgumentNullException">When value is null</exception>
+        /// <exception cref="FormatException">If value doesn't pass the Regex check</exception>
+        /// <exception cref="ArgumentOutOfRangeException">If value passes the Regex check but date is invalid</exception>
         public PersonIdentificationNumber(string value) : base(value)
         {
             // Check that we have anything.
-            if (string.IsNullOrWhiteSpace(value))
+            if (value == null)
                 throw new ArgumentNullException(nameof(value));
 
             // Parse the value and get the date of birth.
@@ -161,7 +165,7 @@ namespace psafth.IdentificationNumber.Swedish.Entities
             else
             {
                 // Assume four digits
-                dateOfBirth = new DateTime(year, month, day);
+                dateOfBirth = new DateTime(year, month, day > 31 ? day - 60 : day);
             }
 
             // Set the type. Coordination or Person.
