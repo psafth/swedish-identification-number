@@ -88,6 +88,36 @@ namespace IdentificationNumber.Tests
     public class PersonIdentificationNumber_Constructor
     {
         [TestMethod]
+        [DataRow("0000000000")]
+        [DataRow("ABCDEFGHIJ")]
+        public void Parse_CheckInvalidInputs_ReturnsFormatException(string input)
+        {
+            Assert.ThrowsException<FormatException>(() => new PersonIdentificationNumber(input));
+        }
+
+        [TestMethod]
+        [DataRow("197002881237", "197002881237", NumberType.Coordination)]  // Checks that the coordinationnumber is correct
+        [DataRow("2212133572", "202212133572", NumberType.Person)]          // Checks the type Person
+        public void Parse_CheckInput_ReturnsExpected(string input, string expected, NumberType expectedType)
+        {
+            var result = new PersonIdentificationNumber(input);
+            var isEqual = result.Equals(expected);
+
+            Assert.IsTrue(isEqual && expectedType == result.Type);
+        }
+
+        public void Parse_CheckIfNull_ReturnsArgumentNullException()
+        {
+            Assert.ThrowsException<ArgumentNullException>(() => new PersonIdentificationNumber(null));
+        }
+
+        [DataRow("197002301236", "197002301236")]   // Check an invalid date even if Regex passes
+        public void Parse_CheckInvalidDate_ReturnsArgumentOutOfRangeException()
+        {
+            Assert.ThrowsException<ArgumentOutOfRangeException>(() => new PersonIdentificationNumber(null));
+        }
+
+        [TestMethod]
         [DataRow("1702052380", "201702052380")]
         [DataRow("2212133572", "202212133572")]
         public void Parse_PartialYear_CurrentDecade(string input, string expected)

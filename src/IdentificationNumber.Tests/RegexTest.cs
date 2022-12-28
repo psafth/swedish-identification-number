@@ -20,6 +20,11 @@ namespace IdentificationNumber.Tests
         [DataRow("195401762397")]           // Coordination born 1954-01-16
         [DataRow("200001632389")]           // Coordination born 2000-01-02
         [DataRow("000163+2389")]            // Coordination born 1900-01-02
+        [DataRow(" 20000163-2389")]         // Resilience test for whitespaces
+        [DataRow(" 20000163-2389 ")]        // Resilience test for whitespaces
+        [DataRow(" 20000163 -2389 ")]       // Resilience test for whitespaces
+        [DataRow(" 20000163 - 2389 ")]      // Resilience test for whitespaces
+        [DataRow("  20000163  -  2389  ")]  // Resilience test for whitespaces
         public void String_MatchPerson_Successful(string input)
         {
             var result = CommonRegex.MatchPerson(input);
@@ -27,7 +32,10 @@ namespace IdentificationNumber.Tests
         }
 
         [TestMethod]
+        [DataRow("")]
+        [DataRow("    ")]
         [DataRow("test")]
+        [DataRow("123456789")]
         [DataRow("2201702022383")]
         [DataRow("2201702022383\r\n")]
         [DataRow("220170\r\n2022383")]
