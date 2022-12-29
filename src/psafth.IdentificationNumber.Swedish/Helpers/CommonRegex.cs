@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Text.RegularExpressions;
 
-namespace IdentificationNumber.Helpers
+namespace psafth.IdentificationNumber.Swedish.Helpers
 {
     public static class CommonRegex
     {

@@ -1,4 +1,4 @@
-﻿namespace IdentificationNumber.Enums
+﻿namespace psafth.IdentificationNumber.Swedish.Entities
 {
     public enum BusinessForm
     {
