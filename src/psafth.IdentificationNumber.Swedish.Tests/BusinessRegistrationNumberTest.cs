@@ -9,32 +9,28 @@ namespace psafth.IdentificationNumber.Swedish.Tests
         [DataRow("2120000142")]
         public void Input_WithoutSeparator_IsValid_ReturnsTrue(string input)
         {
-            var result = new BusinessRegistrationNumber(input).IsValid;
-            Assert.IsTrue(result);
+            Assert.IsTrue(BusinessRegistrationNumber.TryParse(input, out _));
         }
 
         [TestMethod]
         [DataRow("2120000143")]
         public void Input_WithoutSeparator_IsValid_ReturnsFalse(string input)
         {
-            var result = new BusinessRegistrationNumber(input).IsValid;
-            Assert.IsFalse(result);
+            Assert.IsFalse(BusinessRegistrationNumber.TryParse(input, out _));
         }
 
         [TestMethod]
         [DataRow("212000-0142")]
         public void Input_WithSeparator_IsValid_ReturnsTrue(string input)
         {
-            var result = new BusinessRegistrationNumber(input).IsValid;
-            Assert.IsTrue(result);
+            Assert.IsTrue(BusinessRegistrationNumber.TryParse(input, out _));
         }
 
         [TestMethod]
         [DataRow("212000-0143")]
         public void Input_WithSeparator_IsValid_ReturnsFalse(string input)
         {
-            var result = new BusinessRegistrationNumber(input).IsValid;
-            Assert.IsFalse(result);
+            Assert.IsFalse(BusinessRegistrationNumber.TryParse(input, out _));
         }
 
     }
@@ -55,7 +51,7 @@ namespace psafth.IdentificationNumber.Swedish.Tests
         [DataRow("802004-9642", "8020049642")]
         public void Parse_Valid_Input(string input, string expected)
         {
-            var result = new BusinessRegistrationNumber(input);
+            var result = BusinessRegistrationNumber.Parse(input);
             var isEqual = result.Equals(expected);
 
             Assert.IsTrue(isEqual);
@@ -68,18 +64,14 @@ namespace psafth.IdentificationNumber.Swedish.Tests
         [DataRow("http://malicious.web/<script>alert(\"TEST\");</script>")]
         public void Input_Person_ThrowsFormatException(string input)
         {
-            Action result = () => new BusinessRegistrationNumber(input);
-            Assert.ThrowsException<FormatException>(result);
+            Assert.ThrowsException<FormatException>(() => BusinessRegistrationNumber.Parse(input));
         }
 
         [TestMethod]
         [DataRow(null)]
-        [DataRow("")]
-        [DataRow("    ")]
-        public void Input_Empty_ThrowsArgumentNullException(string input)
+        public void Input_IsNull_ThrowsArgumentNullException(string input)
         {
-            Action result = () => new BusinessRegistrationNumber(input);
-            Assert.ThrowsException<ArgumentNullException>(result);
+            Assert.ThrowsException<ArgumentNullException>(() => BusinessRegistrationNumber.Parse(input));
         }
     }
 
@@ -90,7 +82,7 @@ namespace psafth.IdentificationNumber.Swedish.Tests
         [DataRow("2120000142", "212000-0142")]
         public void Input_WithoutSeparator_ToFormalString(string input, string expected)
         {
-            var result = new BusinessRegistrationNumber(input).ToFormalString();
+            var result = BusinessRegistrationNumber.Parse(input).ToFormalString();
 
             Assert.AreEqual(expected, result);
         }

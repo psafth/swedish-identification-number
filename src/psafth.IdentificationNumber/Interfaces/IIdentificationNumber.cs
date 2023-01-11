@@ -1,9 +1,9 @@
 ﻿namespace psafth.IdentificationNumber.Interfaces
 {
-    public interface IIdentificationNumber
+    public interface IIdentificationNumber<T>
     {
+        T ParseFromString(string value);
         string ToFormalString();
-        bool Equals(IIdentificationNumber other);
         bool IsValid { get; }
     }
 }

@@ -6,33 +6,14 @@ using psafth.IdentificationNumber.Swedish.Helpers;
 
 namespace psafth.IdentificationNumber.Swedish.Entities
 {
-    public class BusinessRegistrationNumber : IdentificationNumber, IEquatable<string>
+    public class BusinessRegistrationNumber : IdentificationNumber<BusinessRegistrationNumber>, IEquatable<string>
     {
-        public BusinessRegistrationNumber(string value) : base(value)
-        {
-            // Check that we have anything.
-            if (string.IsNullOrWhiteSpace(value))
-                throw new ArgumentNullException(nameof(value));
-
-            // Parse the value and get the business form
-            var parsedValue = Parse(value, out BusinessForm businessForm);
-
-            // Set the business form
-            this.BusinessForm = businessForm;
-
-            // Store the value to the backing field.
-            _value = parsedValue;
-        }
+        private BusinessRegistrationNumber() { }
 
         public BusinessForm BusinessForm
         {
             get;
             private set;
-        }
-
-        public override bool Equals(IIdentificationNumber other)
-        {
-            return _value == other.ToString();
         }
 
         public override bool IsValid
@@ -48,42 +29,59 @@ namespace psafth.IdentificationNumber.Swedish.Entities
             return _value.Insert(6, "-");
         }
 
-        public bool Equals(string other)
+        public static bool TryParse(string value, out BusinessRegistrationNumber businessRegistrationNumber)
         {
             try
             {
-                var otherBusinessRegistrationNumber = other.ToIdentificationNumber();
-                return _value == otherBusinessRegistrationNumber.ToString();
+                businessRegistrationNumber = Parse(value);
+
+                if (!businessRegistrationNumber.IsValid)
+                    businessRegistrationNumber = null;
+
+                return businessRegistrationNumber.IsValid;
             }
-            catch { return false; }
+            catch
+            {
+                businessRegistrationNumber = null;
+                return false;
+            }
         }
 
-
-        public override string ToString()
+        public static BusinessRegistrationNumber Parse(string value)
         {
-            return _value;
+            return new BusinessRegistrationNumber().ParseFromString(value);
         }
 
-        public static bool IsMatching(string value)
+        public static implicit operator string(BusinessRegistrationNumber businessRegistrationNumber)
         {
-            return CommonRegex.MatchBusiness(value).Success;
+            return businessRegistrationNumber.ToString();
         }
 
-        private string Parse(string value, out BusinessForm businessForm)
+        protected override BusinessRegistrationNumber ParseFromString(string value)
         {
+            if (value == null)
+                throw new ArgumentNullException(nameof(value));
+
             var match = CommonRegex.MatchBusiness(value);
 
             if (!match.Success)
                 throw new FormatException("The input does not match a valid person identification number.");
 
-            var group = int.Parse(match.Groups["group"]?.Value);        // Business form
+            var group = int.Parse(match.Groups["group"]?.Value); // Business form
             var number = match.Groups["number"]?.Value;
             var serial = match.Groups["serial"]?.Value;
             var control = int.Parse(match.Groups["control"]?.Value);
 
-            businessForm = (BusinessForm)group;
+            BusinessForm = (BusinessForm)group;
 
-            return $"{group}{number}{serial}{control}";
+            _value = $"{group}{number}{serial}{control}";
+
+            return this;
+        }
+
+        public bool Equals(string other)
+        {
+            return _value == other;
         }
     }
 }

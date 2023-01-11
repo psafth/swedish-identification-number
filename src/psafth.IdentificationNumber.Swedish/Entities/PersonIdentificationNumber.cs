@@ -9,8 +9,9 @@ using System.Linq;
 
 namespace psafth.IdentificationNumber.Swedish.Entities
 {
-    public class PersonIdentificationNumber : IdentificationNumber, IEquatable<string>
+    public class PersonIdentificationNumber : IdentificationNumber<PersonIdentificationNumber>, IEquatable<string>
     {
+        private PersonIdentificationNumber() { }
 
         public PersonNumberType Type
         {
@@ -34,67 +35,6 @@ namespace psafth.IdentificationNumber.Swedish.Entities
         /// The persons date of birth
         /// </summary>
         public DateTime DateOfBirth { get; private set; }
-
-        /// <summary>
-        /// Creates a person identification number from a valid string.
-        /// <para>Valid inputs are:
-        /// <br>YYMMDD-XXXX</br>
-        /// <br>YYMMDD+XXXX</br>
-        /// <br>YYYYMMDDXXXX</br>
-        /// <br>YYYYMMDD-XXXX</br>
-        /// </para>
-        /// <para>
-        /// <br>Coordination numbers are also valid.</br>
-        /// <br>DD must be 1-31 or 61-91.</br>
-        /// </para>
-        /// </summary>
-        /// <param name="value">String to be parsed as an personal identification number.</param>
-        /// <exception cref="ArgumentNullException">When value is null</exception>
-        /// <exception cref="FormatException">If value doesn't pass the Regex check</exception>
-        /// <exception cref="ArgumentOutOfRangeException">If value passes the Regex check but date is invalid</exception>
-        public PersonIdentificationNumber(string value) : base(value)
-        {
-            // Check that we have anything.
-            if (value == null)
-                throw new ArgumentNullException(nameof(value));
-
-            // Parse the value and get the date of birth.
-            var parsedValue = Parse(value, out DateTime dateOfBirth, out PersonNumberType type);
-
-            // Set the date of birth.
-            DateOfBirth = dateOfBirth;
-
-            // Set the number type
-            Type = type;
-
-            // Store the value to the backing field.
-            _value = parsedValue;
-        }
-
-        /// <summary>
-        /// Compares two person identification numbers by matching their backing field value.
-        /// </summary>
-        /// <param name="other"></param>
-        /// <returns></returns>
-        public bool Equals(string other)
-        {
-            try
-            {
-                var otherPersonIdentificationNumber = other.ToIdentificationNumber();
-                return _value == otherPersonIdentificationNumber.ToString();
-            }
-            catch { return false; }
-        }
-
-        /// <summary>
-        /// Compares two person identification numbers by matching their backing field value.
-        /// </summary>
-        /// <param name="other"></param>
-        /// <returns></returns>
-        public override bool Equals(IIdentificationNumber other)
-        {
-            return _value == other.ToString();
-        }
 
         /// <summary>
         /// Validates a person identification number. True if valid. False if not.
@@ -121,13 +61,80 @@ namespace psafth.IdentificationNumber.Swedish.Entities
             return $"{birth}{separator}{lastFour}";
         }
 
-        public override string ToString()
+        public static bool TryParse(string value, out PersonIdentificationNumber personIdentificationNumber)
         {
-            return base._value;
+            try
+            {
+                personIdentificationNumber = Parse(value);
+
+                if (!personIdentificationNumber.IsValid)
+                    personIdentificationNumber = null;
+
+                return personIdentificationNumber.IsValid;
+            }
+            catch
+            {
+                personIdentificationNumber = null;
+                return false;
+            }
+        }
+
+        public static PersonIdentificationNumber Parse(string value)
+        {
+            return new PersonIdentificationNumber().ParseFromString(value);
+        }
+
+        public static implicit operator string(PersonIdentificationNumber personIdentificationNumber)
+        {
+            return personIdentificationNumber.ToString();
         }
 
         /// <summary>
-        /// Parses a string to a full valid person identification number and passes the date of birth as an out parameter.
+        /// Create a <see cref="PersonIdentificationNumber"/> that can be used for creating bogus data.
+        /// </summary>
+        /// <param name="yearMonthDay">The birthday of the person</param>
+        /// <param name="gender">The gender to set</param>
+        /// <param name="numberType">The numbertype to set</param>
+        /// <returns>Returns the created <see cref="PersonIdentificationNumber"/></returns>
+        public static PersonIdentificationNumber Create(DateTime yearMonthDay, Gender gender, PersonNumberType numberType)
+        {
+            var rnd = new Random();
+            int genderNumber;
+
+            if (gender == Gender.Male)
+            {
+                // 1, 3, 5, 7, 9
+                genderNumber = rnd.Next(1, 5) * 2 - 1;
+            }
+            else
+            {
+                // 0, 2, 4, 6, 8
+                genderNumber = rnd.Next(0, 4) * 2;
+            }
+
+            // Add 60 to day if coordination number
+            int day = yearMonthDay.Day + (numberType == PersonNumberType.Coordination ? 60 : 0);
+
+            // Create random 2 digit number
+            int firstTwoRnd = rnd.Next(0, 99);
+
+            // Create partial 9 numbers (all but the controlnumber)
+            string partial = $"{yearMonthDay:yyMM}{day:00}{firstTwoRnd:00}{genderNumber}";
+
+            PersonIdentificationNumber personIdentificationNumber = new PersonIdentificationNumber();
+
+            // Get the controlnumber and add it to get the full
+            personIdentificationNumber._value = $"{yearMonthDay.Year / 100}{partial}{Luhn.GetControlNumber(partial)}";
+
+            personIdentificationNumber.Type = numberType;
+            personIdentificationNumber.DateOfBirth = yearMonthDay;
+
+            // Parse and return
+            return personIdentificationNumber;
+        }
+
+        /// <summary>
+        /// Parses a string to a full valid person identification number.
         /// Valid inputs are:
         /// YYMMDD-XXXX
         /// YYMMDD+XXXX
@@ -137,10 +144,10 @@ namespace psafth.IdentificationNumber.Swedish.Entities
         /// Coordination numbers are also valid.
         /// </summary>
         /// <param name="value">String input to be parsed</param>
-        /// <param name="dateOfBirth">DateTime </param>
-        /// <returns>String in the format of YYYYMMDDXXXX</returns>
-        /// <exception cref="FormatException"></exception>
-        private string Parse(string value, out DateTime dateOfBirth, out PersonNumberType type)
+        /// <exception cref="ArgumentNullException">When value is null</exception>
+        /// <exception cref="FormatException">If value doesn't pass the Regex check</exception>
+        /// <exception cref="ArgumentOutOfRangeException">If value passes the Regex check but date is invalid</exception>
+        protected override PersonIdentificationNumber ParseFromString(string value)
         {
             var match = CommonRegex.MatchPerson(value);
 
@@ -160,31 +167,33 @@ namespace psafth.IdentificationNumber.Swedish.Entities
 
                 // Assume two digits
                 var assumedDateOfBirth = new DateTime(GetDecade(DateTime.Today.Year) + year + prevDecade, month, day > 31 ? day - 60 : day);
-                dateOfBirth = assumedDateOfBirth <= DateTime.Today ? assumedDateOfBirth : new DateTime(GetDecade(DateTime.Today.Year) + year - 100 + prevDecade, month, day > 31 ? day - 60 : day);
+                DateOfBirth = assumedDateOfBirth <= DateTime.Today ? assumedDateOfBirth : new DateTime(GetDecade(DateTime.Today.Year) + year - 100 + prevDecade, month, day > 31 ? day - 60 : day);
             }
             else
             {
                 // Assume four digits
-                dateOfBirth = new DateTime(year, month, day > 31 ? day - 60 : day);
+                DateOfBirth = new DateTime(year, month, day > 31 ? day - 60 : day);
             }
 
             // Set the type. Coordination or Person.
             if (day > 0)
-                type = day > 31 && day < 92 ? PersonNumberType.Coordination : PersonNumberType.Person;
+                Type = day > 31 && day < 92 ? PersonNumberType.Coordination : PersonNumberType.Person;
             else
-                type = PersonNumberType.Unknown;
+                Type = PersonNumberType.Unknown;
 
-            return $"{dateOfBirth.Year:0000}{dateOfBirth.Month:00}{day:00}{individual:000}{control:0}";
+            _value = $"{DateOfBirth.Year:0000}{DateOfBirth.Month:00}{day:00}{individual:000}{control:0}";
+
+            return this;
         }
 
         private int GetDecade(int year)
         {
-            return Math.DivRem(year, 100, out int rem) * 100;
+            return Math.DivRem(year, 100, out _) * 100;
         }
 
-        public static bool IsMatching(string value)
+        public bool Equals(string other)
         {
-            return CommonRegex.MatchPerson(value).Success;
+            return _value == other;
         }
     }
 }
